@@ -1,0 +1,25 @@
+/** @format */
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background: url("../../../public/sprite.png");
+  background-position: -10px -60px;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  vertical-align: middle;
+  margin: 0px 16px;
+}
+
+.cart {
+  width: 30px;
+  height: 43px;
+  background: url("../../../public/cart.png") no-repeat -53px 1px;
+  background-size: 350%;
+  text-align: center;
+  line-height: 50px;
+  font-family: Roboto, sans-serif;
+  display: block;
+  letter-spacing: -1px;
+}
