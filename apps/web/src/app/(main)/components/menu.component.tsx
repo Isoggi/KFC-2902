@@ -1,13 +1,14 @@
 /** @format */
-"use client";
-import { api } from "@/config/axios.config";
-import { IMenu } from "@/interfaces/menu";
-import { useSession } from "next-auth/react";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+'use client';
+import { api } from '@/config/axios.config';
+import { ICategory } from '@/interfaces/category';
+import { IMenu } from '@/interfaces/menu';
+import { useSession } from 'next-auth/react';
+import Image from 'next/image';
+import React, { useEffect, useState } from 'react';
 
 type Props = {
-  category: string;
+  category: ICategory;
 };
 
 export function MenuComponent({ category }: Props) {
@@ -15,20 +16,20 @@ export function MenuComponent({ category }: Props) {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await api.get("/products", {
+      const res = await api.get('/products', {
         params: {
-          category,
+          categoryId: category.id,
         },
       });
 
-      setMenus(res.data);
+      setMenus(res.data.data);
     };
     fetch();
   }, []);
   return (
-    <div className="w-full pt-[150px] -mt-[150px]" id={category}>
+    <div className="w-full pt-[150px] -mt-[150px]" id={category.category}>
       <div className="ml-3 font-bold lg:text-[28px] md:text-[22px] flex items-center mb-[20px] text-nowrap">
-        <div className="pr-[15px]">{category}</div>
+        <div className="pr-[15px]">{category.category}</div>
       </div>
       <div className="grid  xl:grid-cols-4 md:grid-cols-3 grid-cols-1 w-full ">
         {menus.map((_: IMenu, key) => (
@@ -44,7 +45,7 @@ export function MenuCard({ menu }: { menu: IMenu }) {
     <div className="shadow-lg border  p-[10px] mx-[10px] mb-[25px]  md:grid md:grid-cols-1 flex">
       <div className="aspect-square  md:aspect-square h-full max-w-[194px] md:max-w-max 2xl:max-w-[320px] w-full flex pb-8 md:pb-0">
         <Image
-          src={menu.img_src}
+          src={menu.image}
           alt="gambar"
           width={320}
           height={320}
@@ -55,7 +56,7 @@ export function MenuCard({ menu }: { menu: IMenu }) {
         <div className="flex flex-col md:flex-row justify-between font-bold lg:text-lg mb-[10px] ">
           <div>{menu.product_name}</div>
           <div className="mt-[15px] md:mt-0">
-            Rp{menu.price?.toLocaleString("id-ID")}
+            Rp{menu.price?.toLocaleString('id-ID')}
           </div>
         </div>
         <div className="mb-[35px]  sm:text-sm">{menu.description}</div>

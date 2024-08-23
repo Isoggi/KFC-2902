@@ -1,8 +1,8 @@
 /** @format */
 
-import React from "react";
+import React from 'react';
 
-import MenuListCategory from "../components/menu.category.component";
+import MenuListCategory from '../components/menu.category.component';
 
 type Props = {};
 

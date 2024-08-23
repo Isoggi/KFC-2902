@@ -1,10 +1,12 @@
 /** @format */
 
+import { ICategory } from './category';
+
 export interface IMenu {
   id: number;
-  category: string;
-  img_src: string;
+  image: string;
   description: string;
   product_name: string;
   price: number;
+  Category: ICategory;
 }

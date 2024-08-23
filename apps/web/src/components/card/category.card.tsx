@@ -1,10 +1,11 @@
 /** @format */
-"use client";
-import { api } from "@/config/axios.config";
-import { ICategory } from "@/interfaces/category";
-import { ChevronRight } from "lucide-react";
-import Image from "next/image";
-import React, { useEffect, useState } from "react";
+'use client';
+import { api } from '@/config/axios.config';
+import { ICategory } from '@/interfaces/category';
+import { ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useEffect, useState } from 'react';
 
 type Props = {};
 
@@ -13,8 +14,9 @@ export default function CategoryCardList({}: Props) {
 
   useEffect(() => {
     const fetch = async () => {
-      const res = await api.get("/categories");
-      setCategories(res.data);
+      const res = await api.get('/categories');
+
+      setCategories(res.data.data);
     };
     fetch();
   }, []);
@@ -27,13 +29,14 @@ export default function CategoryCardList({}: Props) {
       </div>
       <div className="grid grid-cols-4">
         {categories.map((category, key) => (
-          <CategoryCard key={key} category={category} />
+          <Link key={key} href={`/menu#${category.category}`}>
+            <CategoryCard category={category} />
+          </Link>
         ))}
       </div>
     </div>
   );
 }
-
 const CategoryCard = ({ category }: { category: ICategory }) => {
   return (
     <div className="py-[6px] px-3 mb-[10px] ">
@@ -43,7 +46,7 @@ const CategoryCard = ({ category }: { category: ICategory }) => {
           width={330}
           height={272}
           className="w-full aspect-[330/272] rounded-t"
-          src={category.img_src}
+          src={category.image}
         />
         <div className="text-[19px] font-bold flex items-center py-4 px-[10px]">
           {category.category}
