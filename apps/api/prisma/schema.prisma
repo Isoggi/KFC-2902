@@ -23,6 +23,7 @@ model User {
   birth_date   DateTime
   email        String   @unique
   password     String
+  full_name    String
 
   @@map("users")
 }

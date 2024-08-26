@@ -1,16 +1,16 @@
 /** @format */
-import { api } from "@/config/axios.config";
-import { loginSchema } from "@/schemas/auth.schema";
-import NextAuth from "next-auth";
-import Credential from "next-auth/providers/credentials";
-import google from "next-auth/providers/google";
-
+import { api } from '@/config/axios.config';
+import { loginSchema } from '@/schemas/auth.schema';
+import NextAuth, { User } from 'next-auth';
+import Credential from 'next-auth/providers/credentials';
+import google from 'next-auth/providers/google';
+import { jwtDecode } from 'jwt-decode';
 export const { signIn, signOut, handlers, auth } = NextAuth({
   pages: {
-    signIn: "/login",
+    signIn: '/login',
   },
   session: {
-    strategy: "jwt",
+    strategy: 'jwt',
     maxAge: 60 * 60,
   },
   providers: [
@@ -22,16 +22,16 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
       authorize: async (credentials) => {
         try {
           const validateFields = loginSchema.safeParse(credentials);
-          if (!validateFields.success) throw new Error("Login Gagal");
-          const res = await api.get("/users", {
-            params: {
-              phone_number: credentials?.phone_number,
-              password: credentials?.password,
-            },
+          if (!validateFields.success) throw new Error('Login Gagal');
+          const res = await api.post('/auth/v1', {
+            phone_number: credentials?.phone_number,
+            password: credentials?.password,
           });
-          const user = res.data[0];
-          delete user.password;
-          delete user.confirm_password;
+          const token = res.data.data;
+          if (!token) throw new Error('Login Gagal');
+
+          const user = jwtDecode(token) as User;
+
           return user;
         } catch (error) {
           return null;
@@ -41,8 +41,8 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account, profile, email, credentials }) {
-      if (account?.provider === "google") {
-        const res = await api.get("/users", {
+      if (account?.provider === 'google') {
+        const res = await api.get('/users', {
           params: {
             email: user?.email,
           },
@@ -52,7 +52,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
           const newUser = {
             full_name: user.name,
             phone_number: null,
-            gender: "Pria",
+            gender: 'Pria',
             date: null,
             month: null,
             year: null,
@@ -62,7 +62,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
             google_id: user.id,
             image: user.image,
           };
-          const { data } = await api.post("/users", newUser);
+          const { data } = await api.post('/users', newUser);
 
           if (data) {
             user = data;
@@ -73,17 +73,20 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
+        console.log(token);
+
+        session.user.id = String(token.id);
         session.user.phone_number = token.phone_number as string;
         session.user.email = token.email as string;
         session.user.full_name = token.full_name as string;
         session.user.image = token.image as string;
+        session.user.gender = token.gender as 'Pria' | 'Perempuan' | undefined;
       }
       return session;
     },
     async jwt({ token, user, account, profile, trigger, session }) {
-      if (account?.provider === "google") {
-        const res = await api.get("/users", {
+      if (account?.provider === 'google') {
+        const res = await api.get('/users', {
           params: {
             email: user?.email,
           },
@@ -95,13 +98,14 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
       }
 
       if (user) {
-        token.id = user.id;
+        token.id = Number(user.id);
         token.full_name = user.full_name;
         token.phone_number = user.phone_number;
-        token.email = user.email;
+        token.email = String(user.email);
+        token.gender = user.gender;
       }
 
-      if (trigger === "update" && session) {
+      if (trigger === 'update' && session) {
         token = { ...token, ...session };
       }
 

@@ -7,10 +7,11 @@ import express, {
   NextFunction,
 } from 'express';
 import cors from 'cors';
-import { PORT } from './config';
+import { JWT_SECRET, PORT } from './config';
 import { AuthRouter } from './routers/auth.router';
 import { CategoryRouter } from './routers/category.router';
 import { ProductRouter } from './routers/product.router';
+import { ErrorHandler, responseHandler } from './helpers/response';
 export default class App {
   private app: Express;
 
@@ -31,7 +32,7 @@ export default class App {
     // not found
     this.app.use((req: Request, res: Response, next: NextFunction) => {
       if (req.path.includes('/api/')) {
-        res.status(404).send('Not found !');
+        res.status(404).send(responseHandler('Not found !', null, false));
       } else {
         next();
       }
@@ -39,10 +40,11 @@ export default class App {
 
     // error
     this.app.use(
-      (err: Error, req: Request, res: Response, next: NextFunction) => {
+      (err: ErrorHandler, req: Request, res: Response, next: NextFunction) => {
         if (req.path.includes('/api/')) {
-          console.error('Error : ', err.stack);
-          res.status(500).send('Error !');
+          res
+            .status(err.statusCode || 500)
+            .send(responseHandler(err.message, null, false));
         } else {
           next();
         }
