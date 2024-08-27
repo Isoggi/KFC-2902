@@ -1,6 +1,7 @@
 /** @format */
 'use client';
 import { api } from '@/config/axios.config';
+import { category_src, product_src } from '@/config/image.config';
 import { ICategory } from '@/interfaces/category';
 import { IMenu } from '@/interfaces/menu';
 import { useSession } from 'next-auth/react';
@@ -45,7 +46,7 @@ export function MenuCard({ menu }: { menu: IMenu }) {
     <div className="shadow-lg border  p-[10px] mx-[10px] mb-[25px]  md:grid md:grid-cols-1 flex">
       <div className="aspect-square  md:aspect-square h-full max-w-[194px] md:max-w-max 2xl:max-w-[320px] w-full flex pb-8 md:pb-0">
         <Image
-          src={menu.image}
+          src={product_src + menu.image}
           alt="gambar"
           width={320}
           height={320}

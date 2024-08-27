@@ -1,6 +1,7 @@
 /** @format */
 'use client';
 import { api } from '@/config/axios.config';
+import { category_src } from '@/config/image.config';
 import { ICategory } from '@/interfaces/category';
 import { ChevronRight } from 'lucide-react';
 import Image from 'next/image';
@@ -46,7 +47,7 @@ const CategoryCard = ({ category }: { category: ICategory }) => {
           width={330}
           height={272}
           className="w-full aspect-[330/272] rounded-t"
-          src={category.image}
+          src={category_src + category.image}
         />
         <div className="text-[19px] font-bold flex items-center py-4 px-[10px]">
           {category.category}

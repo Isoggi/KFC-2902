@@ -1,4 +1,4 @@
-import { Prisma, User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { Request } from 'express';
 import prisma from '../prisma';
 import { hash, compare } from 'bcrypt';
@@ -31,18 +31,31 @@ export class AuthService {
     return generateToken(user);
   }
   static async register(req: Request) {
-    const { email, password, phone_number, gender, birth_date, full_name } =
-      req.body;
+    const {
+      email,
+      password,
+      phone_number,
+      gender,
+      date,
+      month,
+      year,
+      full_name,
+    } = req.body;
     const hashPassword = await hash(password, 10);
+
     const data: Prisma.UserCreateInput = {
       email,
       password: hashPassword,
       phone_number,
       gender,
-      birth_date: new Date(birth_date),
+      birth_date: new Date(year, month - 1, date),
       full_name,
     };
 
+    if (req?.file) {
+      const image = req.file;
+      data.image = image.filename;
+    }
     return await prisma.user.create({ data });
   }
 }

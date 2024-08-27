@@ -10,14 +10,13 @@ export const loginAction = async (values: z.infer<typeof loginSchema>) => {
     await signIn('credentials', {
       phone_number: values.phone_number,
       password: values.password,
+      redirect: false,
     });
     return {
       message: 'Login Berhasil',
     };
   } catch (error) {
-    console.log(error);
-
-    throw error;
+    throw new Error('Login Gagal');
   }
 };
 

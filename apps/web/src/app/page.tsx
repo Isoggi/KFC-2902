@@ -1,9 +1,9 @@
 /** @format */
 
-import CategoryCardList from "@/components/card/category.card";
-import CarouselKFC from "@/components/carousel";
-import ProviderContent from "@/components/provider/content.provider";
-import React from "react";
+import CategoryCardList from '@/components/card/category.card';
+import CarouselKFC from '@/components/carousel';
+import ProviderContent from '@/components/provider/content.provider';
+import React from 'react';
 
 type Props = {};
 

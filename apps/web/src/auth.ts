@@ -53,12 +53,9 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
             full_name: user.name,
             phone_number: null,
             gender: 'Pria',
-            date: null,
-            month: null,
-            year: null,
+            birth_date: null,
             email: user.email,
             password: null,
-            confirm_password: null,
             google_id: user.id,
             image: user.image,
           };
@@ -73,8 +70,6 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
     },
     async session({ session, token }) {
       if (session.user) {
-        console.log(token);
-
         session.user.id = String(token.id);
         session.user.phone_number = token.phone_number as string;
         session.user.email = token.email as string;
@@ -103,6 +98,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
         token.phone_number = user.phone_number;
         token.email = String(user.email);
         token.gender = user.gender;
+        token.image = user.image;
       }
 
       if (trigger === 'update' && session) {

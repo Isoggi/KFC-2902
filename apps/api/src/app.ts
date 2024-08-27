@@ -12,6 +12,7 @@ import { AuthRouter } from './routers/auth.router';
 import { CategoryRouter } from './routers/category.router';
 import { ProductRouter } from './routers/product.router';
 import { ErrorHandler, responseHandler } from './helpers/response';
+import { join } from 'path';
 export default class App {
   private app: Express;
 
@@ -26,6 +27,7 @@ export default class App {
     this.app.use(cors());
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
+    this.app.use(express.static(join(__dirname, '/public/images')));
   }
 
   private handleError(): void {

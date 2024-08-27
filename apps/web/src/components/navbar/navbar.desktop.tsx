@@ -1,6 +1,6 @@
 /** @format */
 import Image from 'next/image';
-import React from 'react';
+import React, { useState } from 'react';
 import Logo from '@/../public/kfc-logo.svg';
 import Logo2 from '@/../public/kfc-logo2.svg';
 
@@ -9,12 +9,14 @@ import './navbar.css';
 import { auth } from '@/auth';
 import ButtonLogout from './button.navbar';
 import { Menu } from 'lucide-react';
+import { Button } from '../ui/button';
+import { MenuBar } from './menu.nav';
+import { avatar_src } from '@/config/image.config';
 export default async function NavbarDesktop() {
   const session = await auth();
-
   return (
     <div className="w-full shadow fixed top-0 bg-white z-50  border-b">
-      <div className="  max-w-[1220px]  2xl:max-w-[1440px] m-auto w-full p-3 px-[15px] flex justify-between">
+      <div className=" max-w-[1220px]  2xl:max-w-[1440px] m-auto w-full p-3 px-[15px] flex justify-between">
         <div className="flex w-full items-center">
           <button className="ml-[14px] md:hidden block">
             <Menu width={20} height={19} />
@@ -43,12 +45,6 @@ export default async function NavbarDesktop() {
           >
             MENU
           </Link>
-          <Link
-            href="/"
-            className="flex items-center w-[85px] text-lg  justify-end font-bold"
-          >
-            {session?.user?.gender}
-          </Link>
         </div>
 
         <div className="flex max-w-[465px] w-full text-[15px] items-center justify-end">
@@ -69,15 +65,14 @@ export default async function NavbarDesktop() {
                 width={30}
                 height={30}
                 className="w-[30px] aspect-square rounded-full mx-4"
-                src={session.user?.image}
+                src={avatar_src + session.user?.image}
               />
             ) : (
               <div className="avatar"></div>
             )}
             <div className="cart">1</div>
+            <MenuBar session={session} />
           </div>
-
-          <ButtonLogout />
         </div>
       </div>
     </div>

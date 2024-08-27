@@ -1,6 +1,7 @@
 import { Request } from 'express';
 import prisma from '../prisma';
 import { Prisma } from '@prisma/client';
+import { ErrorHandler } from '@/helpers/response';
 
 export class ProductService {
   static async getAllService(req: Request) {
@@ -15,15 +16,16 @@ export class ProductService {
   }
 
   static async createService(req: Request) {
-    const { product_name, price, description, image, categoryId } = req.body;
-    if (!product_name || !price || !description || !image || !categoryId)
-      throw new Error('product name/price/description/image is required');
+    const { product_name, price, description, categoryId } = req.body;
+    if (!product_name || !price || !description || !categoryId)
+      throw new Error('product name/price/description is required');
+    if (!req.file?.filename) throw new ErrorHandler('file is required', 400);
 
     const data: Prisma.ProductCreateInput = {
       product_name,
       price,
       description,
-      image,
+      image: req.file?.filename,
       Category: {
         connect: {
           id: Number(categoryId),

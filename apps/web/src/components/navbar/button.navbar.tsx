@@ -1,17 +1,17 @@
 /** @format */
 
-"use client";
-import { actionLogout } from "@/action/auth.action";
-import { Menu } from "lucide-react";
-import React from "react";
-import { toast } from "sonner";
+'use client';
+import { actionLogout } from '@/action/auth.action';
+import { Menu } from 'lucide-react';
+import React from 'react';
+import { toast } from 'sonner';
 
 type Props = {};
 
 export default function ButtonLogout({}: Props) {
   const logout = async () => {
     await actionLogout().then(() => {
-      toast("Logout Success");
+      toast('Logout Success');
     });
   };
   return (

@@ -38,9 +38,8 @@ export default function LoginComponent({}: Props) {
   const onSubmit = async (values: z.infer<typeof loginSchema>) => {
     try {
       const res = await loginAction(values);
-      console.log(res);
-
       toast(res.message);
+      router.push('/');
     } catch (err) {
       if (err instanceof Error)
         toast(err.message, {
