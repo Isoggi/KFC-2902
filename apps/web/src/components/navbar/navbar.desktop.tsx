@@ -14,6 +14,8 @@ import { MenuBar } from './menu.nav';
 import { avatar_src } from '@/config/image.config';
 export default async function NavbarDesktop() {
   const session = await auth();
+  console.log(session?.user.access_token);
+
   return (
     <div className="w-full shadow fixed top-0 bg-white z-50  border-b">
       <div className=" max-w-[1220px]  2xl:max-w-[1440px] m-auto w-full p-3 px-[15px] flex justify-between">

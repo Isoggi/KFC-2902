@@ -2,17 +2,12 @@ import { Prisma } from '@prisma/client';
 import { Request } from 'express';
 import prisma from '../prisma';
 import { hash, compare } from 'bcrypt';
-import { generateToken } from '@/lib/jwt';
+import { generateToken, generateTokenEmailVerification } from '@/lib/jwt';
 import { ErrorHandler } from '@/helpers/response';
-
-interface IUser {
-  id: number;
-  phone_number: string;
-  gender: string;
-  birth_date: Date;
-  email: string;
-  password?: string;
-}
+import { sendVerificationEmail } from '@/lib/nodemailer';
+import { verification_url } from '@/config';
+import { IUser } from '@/interfaces/user';
+import fs from 'fs';
 export class AuthService {
   static async login(req: Request) {
     const { phone_number, password } = req.body;
@@ -56,6 +51,80 @@ export class AuthService {
       const image = req.file;
       data.image = image.filename;
     }
-    return await prisma.user.create({ data });
+
+    await prisma.user.create({ data });
+
+    const token = generateTokenEmailVerification({
+      email,
+    });
+
+    return sendVerificationEmail(email, {
+      email,
+      verification_url: verification_url + token,
+    });
+  }
+
+  static async verifyEmail(req: Request) {
+    const { email } = req.user;
+
+    const user = await prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) throw new ErrorHandler('user not found', 404);
+    else if (user.is_verified)
+      throw new ErrorHandler('user already verified', 400);
+
+    await prisma.user.update({
+      where: {
+        email,
+      },
+      data: {
+        is_verified: true,
+      },
+    });
+  }
+
+  static async updateProfile(req: Request) {
+    const { id } = req.user;
+    const { full_name, gender } = req.body;
+    const checkUser = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    if (!checkUser) throw new ErrorHandler('user not found', 404);
+    const data: Prisma.UserUpdateInput = {};
+    if (full_name) data.full_name = full_name;
+    if (gender) data.gender = gender;
+    if (req.file) {
+      data.image = req.file.filename;
+    }
+    await prisma.user.update({
+      data,
+      where: {
+        id,
+      },
+    });
+
+    if (checkUser.image && data.image)
+      fs.unlink(
+        __dirname + '/../public/images/avatars/' + checkUser.image,
+        (err: unknown) => {
+          if (err) console.log(err);
+        },
+      );
+
+    const user = (await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    })) as IUser;
+    delete user.password;
+    const token = generateToken(user);
+    return token;
   }
 }

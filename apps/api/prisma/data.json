@@ -1,0 +1,246 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "full_name": "Customer Test",
+      "phone_number": "0819299001122",
+      "gender": "Pria",
+      "image": "AVATAR-1724733048807.jpeg",
+      "birth_date": "2000-01-01",
+      "email": "test@mail.com",
+      "password": "$2b$10$.ghPwWl3.0q2M8l6p2rgReaxYiSHo3GdBGCYSyyaDrD3WhVBamEH.",
+      "is_verified": true,
+      "role": "Customer"
+    },
+    {
+      "id": 2,
+      "full_name": "Admin",
+      "phone_number": "0819299001123",
+      "gender": "Pria",
+      "image": "AVATAR-1724733048807.jpeg",
+      "birth_date": "2000-01-01",
+      "email": "admin@mail.com",
+      "password": "$2b$10$.ghPwWl3.0q2M8l6p2rgReaxYiSHo3GdBGCYSyyaDrD3WhVBamEH.",
+      "is_verified": true,
+      "role": "Admin"
+    }
+  ],
+  "categories": [
+    {
+      "id": 1,
+      "category": "Spesial",
+      "image": "Spesial.jpg"
+    },
+    {
+      "id": 2,
+      "category": "Combo",
+      "image": "Combo.jpg"
+    },
+    {
+      "id": 3,
+      "category": "Alacarte",
+      "image": "Alacarte.jpg"
+    },
+    {
+      "id": 4,
+      "category": "Drinks",
+      "image": "Drinks.jpeg"
+    },
+    {
+      "id": 5,
+      "category": "Kids Meal",
+      "image": "Kids Meal.jpg"
+    },
+    {
+      "id": 6,
+      "category": "Dessert",
+      "image": "Dessert.jpg"
+    }
+  ],
+  "products": [
+    {
+      "id": 1,
+      "image": "mdl burger combo.jpeg",
+      "product_name": "MDL Burger Combo",
+      "description": "1 Crispy Burger + 1/2 Chicken Ball + Fanta Float + 1 benefit card game",
+      "price": 30000,
+      "categoryId": 1
+    },
+    {
+      "id": 2,
+      "image": "crazy deal 7.jpeg",
+      "product_name": "Crazy Deal",
+      "description": "7pcs Chicken HCC",
+      "price": 90000,
+      "categoryId": 1
+    },
+    {
+      "id": 3,
+      "image": "mdl combo.jpeg",
+      "product_name": "MDL Chicken Combo",
+      "description": "1 pc Chicken + 1 Rice + 1 Fanta Float + 1 benefit card game",
+      "price": 30000,
+      "categoryId": 1
+    },
+    {
+      "id": 4,
+      "image": "jagoan hemat 1.jpeg",
+      "product_name": "Jagoan Hemat 1",
+      "description": "1 pc Chicken + 1 Rice + 1 Fanta Medium",
+      "price": 34545,
+      "categoryId": 1
+    },
+    {
+      "id": 5,
+      "image": "jagoan hemat 2.jpeg",
+      "product_name": "Jagoan Hemat 2",
+      "description": "2 pcs Chicken + 1 Rice + 1 Fanta Medium",
+      "price": 45455,
+      "categoryId": 1
+    },
+    {
+      "id": 40,
+      "product_name": "Tote Bag",
+      "price": 4090,
+      "categoryId": 3,
+      "description": "1 pc Tote Bag/Kantong Ramah Lingkungan Cukup untuk 2 Bucket Besar KFC",
+      "image": "tote bag.jpeg"
+    },
+    {
+      "id": 41,
+      "product_name": "Chicken Balls",
+      "price": 12273,
+      "categoryId": 3,
+      "description": "Chicken Balls",
+      "image": "chicken ball.jpeg"
+    },
+    {
+      "id": 42,
+      "product_name": "Chick Balls Seasoning",
+      "price": 14091,
+      "categoryId": 3,
+      "description": "Chick Ball Seasoning",
+      "image": "chick ball.jpeg"
+    },
+    {
+      "id": 43,
+      "product_name": "Fun Fries",
+      "price": 24546,
+      "categoryId": 3,
+      "description": "Fun Fries",
+      "image": "fun fries.jpeg"
+    },
+    {
+      "id": 50,
+      "image": "koolz.jpeg",
+      "product_name": " Koolz Chocolate ",
+      "description": "1 Porsi Koolz Chocolate",
+      "price": 15000,
+      "categoryId": 6
+    },
+    {
+      "id": 51,
+      "image": "pudding.jpeg",
+      "product_name": " Pudding",
+      "description": "Pudding",
+      "price": 8182,
+      "categoryId": 6
+    },
+    {
+      "id": 52,
+      "image": "soft ice cream.jpeg",
+      "product_name": " Soft Ice Cream",
+      "description": "Soft Ice Cream",
+      "price": 6818,
+      "categoryId": 6
+    },
+    {
+      "id": 53,
+      "image": "sundae.jpeg",
+      "product_name": " Choconut Sundae",
+      "description": "Choconut Sundae",
+      "price": 9091,
+      "categoryId": 6
+    },
+    {
+      "id": 21,
+      "image": "super besar 1.jpeg",
+      "product_name": "Super Besar New",
+      "description": "1 Pcs Chicken + 1 Rice + 1 Fanta Medium + 1 Pcs KFC Soup",
+      "price": 39090,
+      "categoryId": 2
+    },
+    {
+      "id": 22,
+      "image": "super besar 2.jpeg",
+      "product_name": "Super Besar New 2",
+      "description": "2 Pcs Chicken + 1 Rice + 1 Fanta Medium + 1 Pc KFC Soup",
+      "price": 51818,
+      "categoryId": 2
+    },
+    {
+      "id": 23,
+      "image": "jagoan puas 1.jpeg",
+      "product_name": "Jagoan Puas 1",
+      "description": "1 Rice + 1 Pc Chicken + 1 Fanta Reguler",
+      "price": 27273,
+      "categoryId": 2
+    },
+    {
+      "id": 24,
+      "image": "jagoan puas 2.jpeg",
+      "product_name": "Jagoan Puas 2",
+      "description": "1 Crispy Burger + 3 Pcs Chicken Ball + 1 Fanta Reguler",
+      "price": 27273,
+      "categoryId": 2
+    },
+    {
+      "id": 31,
+      "image": "chaki kids .jpeg",
+      "product_name": "Chaki Kids Meal A Dessert",
+      "description": "1 pcs Chicken + 1 Rice + 1 Ovaltine + 1 Puding",
+      "price": 33636,
+      "categoryId": 5
+    },
+    {
+      "id": 32,
+      "image": "chaki kids b.jpeg",
+      "product_name": "Chaki Kids Meal B Dessert",
+      "description": "1 pcs Crispy Burger + 1 French Fries Reg + 1 Ovaltine + 1 Puding",
+      "price": 33636,
+      "categoryId": 5
+    },
+    {
+      "id": 60,
+      "image": "avocado.jpeg",
+      "product_name": " Avocado Float ",
+      "description": " Avocado Float ",
+      "price": 15454,
+      "categoryId": 4
+    },
+    {
+      "id": 61,
+      "image": "lovlychee float.jpeg ",
+      "product_name": " Lovelychee Float ",
+      "description": "Lovelychee Float",
+      "price": 15454,
+      "categoryId": 4
+    },
+    {
+      "id": 62,
+      "image": "mocha float.jpeg ",
+      "product_name": " Mocha Float ",
+      "description": "Mocha Float",
+      "price": 15454,
+      "categoryId": 4
+    },
+    {
+      "id": 63,
+      "image": "yubari float.jpeg ",
+      "product_name": " Yubari Float ",
+      "description": "Yubari Float",
+      "price": 15454,
+      "categoryId": 4
+    }
+  ]
+}

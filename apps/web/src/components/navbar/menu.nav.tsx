@@ -1,14 +1,7 @@
 'use client';
 
 import { actionLogout } from '@/action/auth.action';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
+
 import { Menu } from 'lucide-react';
 import { Session } from 'next-auth';
 import { useSession } from 'next-auth/react';

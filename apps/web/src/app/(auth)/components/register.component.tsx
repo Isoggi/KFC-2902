@@ -1,27 +1,27 @@
 /** @format */
-"use client";
-import { registerSchema } from "@/schemas/auth.schema";
-import { zodResolver } from "@hookform/resolvers/zod";
-import React from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { Form } from "@/components/ui/form";
+'use client';
+import { registerSchema } from '@/schemas/auth.schema';
+import { zodResolver } from '@hookform/resolvers/zod';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { Form } from '@/components/ui/form';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { ErrorMessage } from "@hookform/error-message";
+} from '@/components/ui/select';
+import { ErrorMessage } from '@hookform/error-message';
 
 type Props = {};
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
-import { actionRegister } from "@/action/auth.action";
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
+import { toast } from 'sonner';
+import { Loader2 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { actionRegister } from '@/action/auth.action';
 export default function RegisterComponent({}: Props) {
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
@@ -30,17 +30,24 @@ export default function RegisterComponent({}: Props) {
 
   const {
     register,
-    formState: { errors },
+    formState: {
+      errors,
+      isSubmitting,
+      isDirty,
+      isValid,
+      isSubmitSuccessful,
+      isSubmitted,
+    },
     handleSubmit,
   } = form;
 
   const router = useRouter();
 
   const onSubmit = async (values: z.infer<typeof registerSchema>) => {
-    actionRegister(values)
+    await actionRegister(values)
       .then((res) => {
         form.reset();
-        router.push("/login");
+        router.push('/login');
         toast.success(res.message);
       })
       .catch((err) => {
@@ -59,13 +66,13 @@ export default function RegisterComponent({}: Props) {
             type="text"
             className="block rounded-t-lg  pb-2 pt-5 w-full text-sm text-gray-900 dark:bg-gray-700 border-0 border-b-2 focus-within:border-red-500  peer z-10 relative bg-transparent"
             placeholder=" "
-            {...register("full_name")}
+            {...register('full_name')}
           />
           <label className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-0 origin-[0]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             Nama Lengkap <span className="text-red-500">*</span>
           </label>
           <div className="text-red-500 pt-[5px] min-h-[25px] text-[13px]">
-            <ErrorMessage errors={errors} name={"full_name"} />
+            <ErrorMessage errors={errors} name={'full_name'} />
           </div>
         </div>
         <div className="relative">
@@ -73,20 +80,20 @@ export default function RegisterComponent({}: Props) {
             type="number"
             className="block rounded-t-lg  pb-2 pt-5 w-full text-sm text-gray-900 dark:bg-gray-700 border-0 border-b-2  peer z-10 relative bg-transparent"
             placeholder=" "
-            {...register("phone_number")}
+            {...register('phone_number')}
           />
           <label className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-0 origin-[0]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             Nomor handphone <span className="text-red-500">*</span>
           </label>
           <div className="text-red-500 pt-[5px] min-h-[25px] text-[13px]">
-            <ErrorMessage errors={errors} name={"phone_number"} />
+            <ErrorMessage errors={errors} name={'phone_number'} />
           </div>
         </div>
 
         <Select
           onValueChange={(target) => {
-            if (target === "Pria" || target === "Perempuan")
-              form.setValue("gender", target);
+            if (target === 'Pria' || target === 'Perempuan')
+              form.setValue('gender', target);
           }}
         >
           <SelectTrigger className="w-full  outline-none border-b-2 border-t-0 border-l-0 border-r-0 rounded-none  peer z-10 relative bg-transparent">
@@ -99,10 +106,10 @@ export default function RegisterComponent({}: Props) {
         </Select>
 
         <div className="text-red-500 pt-[5px] min-h-[25px] text-[13px]">
-          <ErrorMessage errors={errors} name={"gender"} />
+          <ErrorMessage errors={errors} name={'gender'} />
         </div>
         <label className=" text-[15px]">
-          Tanggal Lahir*{" "}
+          Tanggal Lahir*{' '}
           <span className="text-red-500 text-[12.5px]">
             (tidak dapat diubah nantinya)
           </span>
@@ -111,7 +118,7 @@ export default function RegisterComponent({}: Props) {
         <div className="flex gap-1 border-b max-w-[339px]">
           <Select
             onValueChange={(target) => {
-              form.setValue("date", Number(target));
+              form.setValue('date', Number(target));
             }}
           >
             <SelectTrigger className="w-full max-w-[113px] outline-none border-none rounded-none">
@@ -128,7 +135,7 @@ export default function RegisterComponent({}: Props) {
 
           <Select
             onValueChange={(target) => {
-              form.setValue("month", Number(target));
+              form.setValue('month', Number(target));
             }}
           >
             <SelectTrigger className="w-full max-w-[113px] outline-none border-none rounded-none">
@@ -145,7 +152,7 @@ export default function RegisterComponent({}: Props) {
 
           <Select
             onValueChange={(target) => {
-              form.setValue("year", Number(target));
+              form.setValue('year', Number(target));
             }}
           >
             <SelectTrigger className="w-full max-w-[113px] outline-none border-none rounded-none">
@@ -168,11 +175,11 @@ export default function RegisterComponent({}: Props) {
           <ErrorMessage
             errors={errors}
             name={
-              form.getFieldState("date").error?.message
-                ? "date"
-                : form.getFieldState("month").error?.message
-                ? "month"
-                : "year"
+              form.getFieldState('date').error?.message
+                ? 'date'
+                : form.getFieldState('month').error?.message
+                  ? 'month'
+                  : 'year'
             }
           />
         </div>
@@ -181,13 +188,13 @@ export default function RegisterComponent({}: Props) {
             type="text"
             className="block rounded-t-lg  pb-2 pt-5 w-full text-sm text-gray-900 dark:bg-gray-700 border-0 border-b-2  peer z-10 relative bg-transparent"
             placeholder=" "
-            {...register("email")}
+            {...register('email')}
           />
           <label className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-0 origin-[0]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             Email <span className="text-red-500">*</span>
           </label>
           <div className="text-red-500 pt-[5px] min-h-[25px] text-[13px]">
-            <ErrorMessage errors={errors} name={"email"} />
+            <ErrorMessage errors={errors} name={'email'} />
           </div>
         </div>
         <div className="relative">
@@ -195,13 +202,13 @@ export default function RegisterComponent({}: Props) {
             type="password"
             className="block rounded-t-lg  pb-2 pt-5 w-full text-sm text-gray-900 dark:bg-gray-700 border-0 border-b-2  peer z-10 relative bg-transparent"
             placeholder=" "
-            {...register("password")}
+            {...register('password')}
           />
           <label className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-0 origin-[0]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             Kata sandi <span className="text-red-500">*</span>
           </label>
           <div className="text-red-500 pt-[5px] min-h-[25px] text-[13px]">
-            <ErrorMessage errors={errors} name={"password"} />
+            <ErrorMessage errors={errors} name={'password'} />
           </div>
         </div>
         <div className="relative">
@@ -209,13 +216,13 @@ export default function RegisterComponent({}: Props) {
             type="password"
             className="block rounded-t-lg  pb-2 pt-5 w-full text-sm text-gray-900 dark:bg-gray-700 border-0 border-b-2  peer z-10 relative bg-transparent"
             placeholder=" "
-            {...register("confirm_password")}
+            {...register('confirm_password')}
           />
           <label className="absolute text-sm duration-300 transform -translate-y-4 scale-75 top-4 z-0 origin-[0]  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-4 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto">
             Konfirmasi kata sandi <span className="text-red-500">*</span>
           </label>
           <div className="text-red-500 pt-[5px] min-h-[25px] mb-[5px]">
-            <ErrorMessage errors={errors} name={"confirm_password"} />
+            <ErrorMessage errors={errors} name={'confirm_password'} />
           </div>
         </div>
 
@@ -225,7 +232,7 @@ export default function RegisterComponent({}: Props) {
             className=" mr-3 mt-[3px] relative top-0 min-w-5 min-h-5"
           ></input>
           <div>
-            Dengan masuk atau mendaftar, anda menyetujui{" "}
+            Dengan masuk atau mendaftar, anda menyetujui{' '}
             <Link href="#" className="underline font-semibold">
               Syarat & Ketentuan serta Kebijakan Privasi. .
             </Link>
@@ -234,18 +241,14 @@ export default function RegisterComponent({}: Props) {
 
         <Button
           type="submit"
-          disabled={form.formState.isSubmitting}
+          disabled={isSubmitting}
           className="w-full rounded-[25px] py-[12px] bg-[#e4002b] max-w-[520px] shadow m-auto"
         >
-          {form.formState.isSubmitting ? (
-            <Loader2 className="animate-spin" />
-          ) : (
-            "Submit"
-          )}
+          {isSubmitting ? <Loader2 className="animate-spin" /> : 'Submit'}
         </Button>
 
         <span className="m-auto pt-[21px] pb-[25px]">
-          Sudah punya akun?{" "}
+          Sudah punya akun?{' '}
           <Link href="/login" className="underline font-semibold">
             Masuk disini
           </Link>

@@ -1,7 +1,7 @@
 /** @format */
 
-import React from "react";
-import RegisterComponent from "../components/register.component";
+import React from 'react';
+import RegisterComponent from '../../components/register.component';
 
 type Props = {};
 

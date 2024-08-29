@@ -15,6 +15,11 @@ enum Gender {
   Pria
 }
 
+enum Role {
+  Customer
+  Admin
+}
+
 model User {
   id           Int      @id @default(autoincrement())
   phone_number String   @unique @db.Char(13)
@@ -24,6 +29,8 @@ model User {
   email        String   @unique
   password     String
   full_name    String
+  is_verified  Boolean  @default(false)
+  role         Role     @default(Customer)
 
   @@map("users")
 }

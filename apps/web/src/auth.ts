@@ -31,6 +31,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
           if (!token) throw new Error('Login Gagal');
 
           const user = jwtDecode(token) as User;
+          user.access_token = token;
 
           return user;
         } catch (error) {
@@ -76,6 +77,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
         session.user.full_name = token.full_name as string;
         session.user.image = token.image as string;
         session.user.gender = token.gender as 'Pria' | 'Perempuan' | undefined;
+        session.user.access_token = token.access_token as string;
       }
       return session;
     },
@@ -99,6 +101,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
         token.email = String(user.email);
         token.gender = user.gender;
         token.image = user.image;
+        token.access_token = String(user.access_token);
       }
 
       if (trigger === 'update' && session) {

@@ -1,8 +1,8 @@
 /** @format */
 
-import React from "react";
-import RegisterComponent from "../components/register.component";
-import LoginComponent from "../components/login.component";
+import React from 'react';
+import RegisterComponent from '../../components/register.component';
+import LoginComponent from '../../components/login.component';
 type Props = {};
 
 export default function Page({}: Props) {

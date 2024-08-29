@@ -8,6 +8,7 @@ declare module 'next-auth' {
     full_name: string | undefined;
     gender: 'Pria' | 'Perempuan' | undefined;
     image?: string;
+    access_token: string;
   }
 
   interface Session {
@@ -25,5 +26,6 @@ declare module 'next-auth/jwt' {
     full_name: string | undefined;
     gender: 'Pria' | 'Perempuan' | undefined;
     image?: string;
+    access_token: string;
   }
 }

@@ -5,6 +5,7 @@ import { loginSchema, registerSchema } from '@/schemas/auth.schema';
 import { z } from 'zod';
 import { signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';
+import { AxiosError } from 'axios';
 export const loginAction = async (values: z.infer<typeof loginSchema>) => {
   try {
     await signIn('credentials', {
@@ -28,14 +29,14 @@ export const actionRegister = async (
   values: z.infer<typeof registerSchema>,
 ) => {
   try {
-    await api.post('/users', values);
+    const res = await api.post('/auth/v2', values);
     return {
-      message: 'Register Berhasil',
+      message: res.data.message,
     };
   } catch (error) {
-    return {
-      message: 'Register Gagal',
-    };
+    if (error instanceof AxiosError)
+      throw new Error(error.response?.data.message);
+    throw new Error('Register Gagal');
   }
 };
 
