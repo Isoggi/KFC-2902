@@ -5,7 +5,7 @@ import NextAuth, { User } from 'next-auth';
 import Credential from 'next-auth/providers/credentials';
 import google from 'next-auth/providers/google';
 import { jwtDecode } from 'jwt-decode';
-export const { signIn, signOut, handlers, auth } = NextAuth({
+export const { signIn, signOut, handlers, auth, unstable_update } = NextAuth({
   pages: {
     signIn: '/login',
   },
@@ -78,6 +78,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
         session.user.image = token.image as string;
         session.user.gender = token.gender as 'Pria' | 'Perempuan' | undefined;
         session.user.access_token = token.access_token as string;
+        session.user.birth_date = token.birth_date as Date;
       }
       return session;
     },
@@ -102,6 +103,7 @@ export const { signIn, signOut, handlers, auth } = NextAuth({
         token.gender = user.gender;
         token.image = user.image;
         token.access_token = String(user.access_token);
+        token.birth_date = user.birth_date;
       }
 
       if (trigger === 'update' && session) {

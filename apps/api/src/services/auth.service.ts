@@ -110,7 +110,7 @@ export class AuthService {
       },
     });
 
-    if (checkUser.image && data.image)
+    if (checkUser.image && data.image && checkUser.image !== data.image)
       fs.unlink(
         __dirname + '/../public/images/avatars/' + checkUser.image,
         (err: unknown) => {

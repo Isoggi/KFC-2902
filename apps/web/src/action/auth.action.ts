@@ -1,11 +1,17 @@
 /** @format */
 'use server';
 import { api } from '@/config/axios.config';
-import { loginSchema, registerSchema } from '@/schemas/auth.schema';
+import {
+  loginSchema,
+  registerSchema,
+  updateProfileSchema,
+} from '@/schemas/auth.schema';
 import { z } from 'zod';
-import { signIn, signOut } from '@/auth';
-import { AuthError } from 'next-auth';
+import { auth, signIn, signOut, unstable_update as update } from '@/auth';
+import { AuthError, User } from 'next-auth';
 import { AxiosError } from 'axios';
+import { jwtDecode } from 'jwt-decode';
+
 export const loginAction = async (values: z.infer<typeof loginSchema>) => {
   try {
     await signIn('credentials', {
@@ -30,6 +36,34 @@ export const actionRegister = async (
 ) => {
   try {
     const res = await api.post('/auth/v2', values);
+    return {
+      message: res.data.message,
+    };
+  } catch (error) {
+    if (error instanceof AxiosError)
+      throw new Error(error.response?.data.message);
+    throw new Error('Register Gagal');
+  }
+};
+
+export const actionUpdateProfile = async (values: FormData) => {
+  try {
+    const session = await auth();
+
+    const res = await api.patch('/auth/profile', values, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${session?.user.access_token}`,
+      },
+    });
+
+    if (res.data.data) {
+      const user = jwtDecode(res.data.data) as User;
+
+      user.access_token = res.data.data;
+      await update({ ...session, ...user });
+    }
+
     return {
       message: res.data.message,
     };

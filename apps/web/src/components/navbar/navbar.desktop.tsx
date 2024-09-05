@@ -1,6 +1,6 @@
-/** @format */
+'use client';
 import Image from 'next/image';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Logo from '@/../public/kfc-logo.svg';
 import Logo2 from '@/../public/kfc-logo2.svg';
 
@@ -12,10 +12,16 @@ import { Menu } from 'lucide-react';
 import { Button } from '../ui/button';
 import { MenuBar } from './menu.nav';
 import { avatar_src } from '@/config/image.config';
-export default async function NavbarDesktop() {
-  const session = await auth();
-  console.log(session?.user.access_token);
-
+import { Session, User } from 'next-auth';
+import { useSession } from 'next-auth/react';
+export default function NavbarDesktop() {
+  // const session = await auth();
+  const session = useSession();
+  const [user, setUser] = useState<User | null>(null);
+  // const [session, setSession] = useState<Session | null>(null);
+  useEffect(() => {
+    if (session.data?.user) setUser(session.data?.user);
+  }, [session]);
   return (
     <div className="w-full shadow fixed top-0 bg-white z-50  border-b">
       <div className=" max-w-[1220px]  2xl:max-w-[1440px] m-auto w-full p-3 px-[15px] flex justify-between">
@@ -61,19 +67,19 @@ export default async function NavbarDesktop() {
           </Link>
 
           <div className="flex items-center">
-            {session?.user?.image ? (
+            {user?.image ? (
               <Image
                 alt=""
                 width={30}
                 height={30}
                 className="w-[30px] aspect-square rounded-full mx-4"
-                src={avatar_src + session.user?.image}
+                src={avatar_src + session.data?.user?.image}
               />
             ) : (
               <div className="avatar"></div>
             )}
             <div className="cart">1</div>
-            <MenuBar session={session} />
+            <MenuBar user={user} />
           </div>
         </div>
       </div>

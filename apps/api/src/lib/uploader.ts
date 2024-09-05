@@ -1,4 +1,4 @@
-import { ErrorHandler } from '@/helpers/response';
+import { ErrorHandler } from '../helpers/response';
 import multer from 'multer';
 import { join } from 'path';
 export const uploader = (prefix: string, folderName: string) => {

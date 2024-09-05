@@ -1,0 +1,15 @@
+FROM node:21.6.2 
+WORKDIR /app/api
+COPY package.json ./
+RUN npm install 
+COPY . . 
+RUN mkdir /dist
+RUN npx prisma generate
+RUN npm i tsc-alias --save-dev
+RUN npm run build
+COPY src/public/* dist/src/public
+EXPOSE 8000
+VOLUME [ "/app/api/node_modules" ]
+
+
+CMD [ "npm", "run" , "serve" ]

@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import prisma from '../prisma';
 import { Prisma } from '@prisma/client';
-import { ErrorHandler } from '@/helpers/response';
+import { ErrorHandler } from '../helpers/response';
 export class CategoryService {
   static async createService(req: Request) {
     const { category, image } = req.body;

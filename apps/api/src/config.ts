@@ -18,3 +18,4 @@ export const NODEMAILER_PASSWORD = process.env.NODEMAILER_PASSWORD || '';
 
 export const verification_url = process.env.VERIFICATION_URL || '';
 export const verify_email_secret = process.env.VERIFY_EMAIL_SECRET || '';
+export const redis_url = process.env.REDIS_URL || '';

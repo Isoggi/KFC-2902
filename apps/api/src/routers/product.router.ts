@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { ProductController } from '../controllers/product.controller';
-import { uploader } from '@/lib/uploader';
+import { uploader } from '../lib/uploader';
 export class ProductRouter {
   private router = Router();
   private productController = new ProductController();

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { CategoryController } from '../controllers/category.controller';
-import { uploader } from '@/lib/uploader';
+import { uploader } from '../lib/uploader';
 export class CategoryRouter {
   private router = Router();
   private categoryController = new CategoryController();

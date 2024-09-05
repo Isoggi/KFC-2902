@@ -1,0 +1,12 @@
+FROM node:21.6.2 
+WORKDIR /app/web 
+COPY package.json ./
+RUN npm install 
+COPY . . 
+RUN npm run build
+
+EXPOSE 3000
+VOLUME [ "/app/web/node_modules" ]
+
+
+CMD [ "npm", "run" , "start" ]

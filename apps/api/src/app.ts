@@ -7,12 +7,13 @@ import express, {
   NextFunction,
 } from 'express';
 import cors from 'cors';
-import { JWT_SECRET, PORT } from './config';
+import { JWT_SECRET, PORT, redis_url } from './config';
 import { AuthRouter } from './routers/auth.router';
 import { CategoryRouter } from './routers/category.router';
 import { ProductRouter } from './routers/product.router';
 import { ErrorHandler, responseHandler } from './helpers/response';
 import { join } from 'path';
+import { redisClient } from './lib/redis';
 export default class App {
   private app: Express;
 
@@ -28,6 +29,9 @@ export default class App {
     this.app.use(json());
     this.app.use(urlencoded({ extended: true }));
     this.app.use(express.static(join(__dirname, '/public/images')));
+    if (!redisClient.isOpen) {
+      redisClient.connect();
+    }
   }
 
   private handleError(): void {
@@ -58,7 +62,7 @@ export default class App {
     this.app.get('/api', (req: Request, res: Response) => {
       res.send(`Hello, Purwadhika Student API!`);
     });
-    this.app.use('/api/auth', new AuthRouter().getRouter());
+    // this.app.use('/api/auth', new AuthRouter().getRouter());
     this.app.use('/api/categories', new CategoryRouter().getRouter());
     this.app.use('/api/products', new ProductRouter().getRouter());
   }
@@ -67,5 +71,9 @@ export default class App {
     this.app.listen(PORT, () => {
       console.log(`  ➜  [API] Local:   http://localhost:${PORT}/`);
     });
+  }
+
+  public getApp(): Express {
+    return this.app;
   }
 }

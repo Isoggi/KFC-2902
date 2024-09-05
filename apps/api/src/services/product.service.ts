@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import prisma from '../prisma';
 import { Prisma } from '@prisma/client';
-import { ErrorHandler } from '@/helpers/response';
+import { ErrorHandler } from '../helpers/response';
 
 export class ProductService {
   static async getAllService(req: Request) {
